@@ -4,48 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dla Marty ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            /* Matowe, eleganckie czerwone tło */
-            background-color: #a31616;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="15" y="40" font-size="25" fill="%23ff8da1" opacity="0.3">❤</text><text x="60" y="85" font-size="25" fill="%23a2d2ff" opacity="0.3">❤</text></svg>');
-            height: 100vh;
+            /* Łagodniejsze, matowe tło */
+            background-color: #d63031;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="10" y="30" font-size="20" fill="%23fab1a0" opacity="0.4">❤</text><text x="60" y="80" font-size="20" fill="%2374b9ff" opacity="0.4">❤</text></svg>');
+            font-family: 'Montserrat', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* To trzyma wszystko na środku */
+            justify-content: center; /* Centrowanie w pionie */
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
             overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
             text-align: center;
         }
 
         h1 {
-            /* Wielki fioletowy tytuł z obrysem */
-            color: #8a2be2;
-            font-size: 4rem; /* Bardzo duży */
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            paint-order: stroke fill;
-            -webkit-text-stroke: 10px white; /* Biały gruby obrys, żeby się nie zlewało */
-            margin-bottom: 50px;
-            padding: 0 20px;
+            color: #2d3436; /* Ciemny, elegancki kolor zamiast jaskrawego fioletu */
+            font-size: 3.5rem; /* Większy tytuł */
+            font-weight: 900;
+            text-shadow: 3px 3px 0px #ffffff;
+            margin-bottom: 40px;
+            margin-top: 0;
+            line-height: 1.2;
+            max-width: 800px;
             z-index: 10;
         }
 
-        /* Kontener na prezent 3D */
-        #gift-box {
-            width: 200px;
-            height: 200px;
-            perspective: 1000px;
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Kontener na prezent */
+        #main-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
 
-        #gift-box:hover {
-            transform: scale(1.1) rotate(5deg);
+        #gift-container {
+            width: 180px;
+            height: 180px;
+            perspective: 1000px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #gift-container:hover {
+            transform: scale(1.15);
         }
 
         .cube {
@@ -54,114 +60,107 @@
             position: relative;
             transform-style: preserve-3d;
             transform: rotateX(-15deg) rotateY(45deg);
-            animation: float 3s infinite ease-in-out;
+            animation: float 4s infinite ease-in-out;
         }
 
         @keyframes float {
             0%, 100% { transform: rotateX(-15deg) rotateY(45deg) translateY(0); }
-            50% { transform: rotateX(-15deg) rotateY(45deg) translateY(-30px); }
+            50% { transform: rotateX(-15deg) rotateY(45deg) translateY(-20px); }
         }
 
         .side {
             position: absolute;
-            width: 200px;
-            height: 200px;
-            background: #ff4d6d; /* Ładny różowy prezent */
-            border: 5px solid #ffd700; /* Złota wstążka */
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.2);
+            width: 180px;
+            height: 180px;
+            background: #e84393; /* Spokojniejszy róż */
+            border: 4px solid #f9ca24; /* Złota wstążka */
+            box-sizing: border-box;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
         }
 
-        .front  { transform: translateZ(100px); }
-        .back   { transform: rotateY(180deg) translateZ(100px); }
-        .right  { transform: rotateY(90deg) translateZ(100px); }
-        .left   { transform: rotateY(-90deg) translateZ(100px); }
-        .top    { transform: rotateX(90deg) translateZ(100px); background: #ff758f; }
-        .bottom { transform: rotateX(-90deg) translateZ(100px); background: #c9184a; }
+        .front  { transform: translateZ(90px); }
+        .back   { transform: rotateY(180deg) translateZ(90px); }
+        .right  { transform: rotateY(90deg) translateZ(90px); }
+        .left   { transform: rotateY(-90deg) translateZ(90px); }
+        .top    { transform: rotateX(90deg) translateZ(90px); background: #fd79a8; }
+        .bottom { transform: rotateX(-90deg) translateZ(90px); }
 
-        .v-ribbon { position: absolute; width: 40px; height: 100%; background: #ffd700; left: 80px; }
-        .h-ribbon { position: absolute; width: 100%; height: 40px; background: #ffd700; top: 80px; }
+        .ribbon-v { position: absolute; width: 30px; height: 100%; background: #f9ca24; left: 75px; }
+        .ribbon-h { position: absolute; width: 100%; height: 30px; background: #f9ca24; top: 75px; }
 
-        /* Serduszko papierowe */
-        #heart-container {
+        /* Karta z powodem */
+        #heart-wrapper {
             display: none;
             flex-direction: column;
             align-items: center;
-            animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .heart-paper {
-            background-color: #ffb3c1;
-            width: 450px;
-            height: 400px;
-            clip-path: path('M225,100 C225,100 190,10 110,10 C30,10 0,70 0,130 C0,220 225,360 225,380 C225,360 450,220 450,130 C450,70 420,10 340,10 C260,10 225,100 225,100 Z');
+        .paper-heart {
+            background-color: #ffcccc; /* Pastelowy róż papieru */
+            width: 350px;
+            height: 320px;
+            clip-path: path('M175,90 C175,90 150,10 85,10 C20,10 0,60 0,110 C0,180 175,300 175,310 C175,300 350,180 350,110 C350,60 330,10 265,10 C200,10 175,90 175,90 Z');
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            padding: 20px;
         }
 
         #reason-text {
-            font-family: 'Dancing Script', crossorigin;
-            font-size: 1.8rem;
-            color: #590d22;
-            max-width: 300px;
-            margin-top: -50px;
-            line-height: 1.3;
+            color: #630e3a;
+            font-size: 1.2rem;
+            font-weight: bold;
+            max-width: 240px;
+            margin-top: -40px;
         }
 
-        @keyframes pop {
-            0% { transform: scale(0); }
-            100% { transform: scale(1); }
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        #refresh-btn {
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: #ffffff;
-            color: #a31616;
+        #reset-btn {
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: #2d3436;
+            color: white;
             border: none;
             border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: 0.3s;
         }
 
-        #refresh-btn:hover {
-            transform: translateY(-5px);
-            background: #ffb3c1;
-        }
-
-        /* Responsywność dla telefonów */
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; -webkit-text-stroke: 5px white; }
-            .heart-paper { width: 320px; height: 300px; }
-            #reason-text { font-size: 1.3rem; max-width: 200px; }
+        #reset-btn:hover {
+            background: #000;
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
 
-    <h1 id="main-title">100 powodów przez które kocham w h*j moją dziewczynę Martę</h1>
+    <div id="main-stage">
+        <h1>100 powodów przez które kocham w h*j moją dziewczynę Martę</h1>
 
-    <div id="gift-box" onclick="showReason()">
-        <div class="cube">
-            <div class="side front"><div class="v-ribbon"></div><div class="h-ribbon"></div></div>
-            <div class="side back"><div class="v-ribbon"></div><div class="h-ribbon"></div></div>
-            <div class="side right"><div class="v-ribbon"></div><div class="h-ribbon"></div></div>
-            <div class="side left"><div class="v-ribbon"></div><div class="h-ribbon"></div></div>
-            <div class="side top"><div class="v-ribbon"></div><div class="h-ribbon"></div></div>
-            <div class="side bottom"></div>
+        <div id="gift-container" onclick="openGift()">
+            <div class="cube">
+                <div class="side front"><div class="ribbon-v"></div><div class="ribbon-h"></div></div>
+                <div class="side back"><div class="ribbon-v"></div><div class="ribbon-h"></div></div>
+                <div class="side right"><div class="ribbon-v"></div><div class="ribbon-h"></div></div>
+                <div class="side left"><div class="ribbon-v"></div><div class="ribbon-h"></div></div>
+                <div class="side top"><div class="ribbon-v"></div><div class="ribbon-h"></div></div>
+                <div class="side bottom"><div class="ribbon-v"></div><div class="ribbon-h"></div></div>
+            </div>
         </div>
-    </div>
 
-    <div id="heart-container">
-        <div class="heart-paper">
-            <p id="reason-text"></p>
+        <div id="heart-wrapper">
+            <div class="paper-heart">
+                <p id="reason-text"></p>
+            </div>
+            <button id="reset-btn" onclick="resetGift()">Wylosuj kolejny powód 🎁</button>
         </div>
-        <button id="refresh-btn" onclick="resetPage()">Wylosuj jeszcze raz! 🎁</button>
     </div>
 
     <script>
@@ -173,15 +172,15 @@
             "Za to, że gotujesz lepiej niż ktokolwiek inny na świecie.",
             "Za Twój najpiękniejszy uśmiech, który rozjaśnia mi każdy dzień.",
             "Za Twoją idealną figurę, która zawsze mnie zachwyca.",
-            "Za to, że jesteś te parę centymetrów niższa ode mnie.",
+            "Za to, że jesteś te parę centymetrów niższa ode mnie – to sprawia, że idealnie pasujesz do moich ramion.",
             "Za Twoją naturalność i to, że nie musisz nic udawać.",
             "Za nasze „umysłowe bluetooth” – rozumiemy się bez słów.",
             "Za to, że masz tak samo świetne poczucie humoru jak ja.",
-            "Za to, że nie obrażasz się na mój czarny humor.",
+            "Za to, że nie obrażasz się na mój czarny humor, tylko jeszcze go podkręcasz.",
             "Za to, że tolerujesz i szanujesz moje poglądy polityczne.",
             "Za to, że przy Tobie mogę być kompletnym świrem.",
             "Za nasze wspólne żarty, których nikt poza nami nie ogarnia.",
-            "Za to, że każda wiadomość od Ciebie to uśmiech na mojej twarzy.",
+            "Za to, że każda wiadomość od Ciebie to od razu banan na mojej twarzy.",
             "Za nasze nocne rozmowy o wszystkim i o niczym.",
             "Za to, że zawsze mnie wspierasz, kiedy mam gorszy dzień.",
             "Za to, że szczerze się o mnie martwisz.",
@@ -194,7 +193,7 @@
             "Za to, jak uroczo wyglądasz, kiedy się złościsz.",
             "Za to, że jesteś moją pierwszą myślą po przebudzeniu.",
             "Za Twój zapach na moich bluzach.",
-            "Za to, że Marta to najlepsze co mnie spotkało.",
+            "Za to, że Marta to po prostu najlepsze co mnie spotkało.",
             "Za precyzję z jaką robisz bransoletki.",
             "Za to, że jesteś mądrzejsza od absolutnie wszystkich których znam.",
             "Za Twoją błyskotliwość w każdej rozmowie.",
@@ -268,22 +267,18 @@
             "Za to, że kocham Cię w h*j!"
         ];
 
-        function showReason() {
-            document.getElementById('gift-box').style.display = 'none';
-            document.getElementById('main-title').style.display = 'none';
-            const container = document.getElementById('heart-container');
+        function openGift() {
+            document.getElementById('gift-container').style.display = 'none';
+            const wrapper = document.getElementById('heart-wrapper');
             const text = document.getElementById('reason-text');
-            
             const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
             text.innerText = randomReason;
-            
-            container.style.display = 'flex';
+            wrapper.style.display = 'flex';
         }
 
-        function resetPage() {
-            document.getElementById('gift-box').style.display = 'block';
-            document.getElementById('main-title').style.display = 'block';
-            document.getElementById('heart-container').style.display = 'none';
+        function resetGift() {
+            document.getElementById('gift-container').style.display = 'block';
+            document.getElementById('heart-wrapper').style.display = 'none';
         }
     </script>
 </body>
