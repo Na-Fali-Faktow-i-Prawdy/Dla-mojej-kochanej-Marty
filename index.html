@@ -6,13 +6,14 @@
     <title>Dla Marty ❤️</title>
     <style>
         body {
-            background-color: #d63031;
+            /* ZMIANA 1: Ulubiony różowy kolor tła Marty */
+            background-color: #ffb6c1; 
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
             height: 100vh; 
             width: 100vw;
-            overflow: hidden; /* Blokujemy suwaki, wszystko ma być na jednym ekranie */
+            overflow: hidden; /* Blokujemy suwaki */
             box-sizing: border-box;
             position: relative;
         }
@@ -24,21 +25,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Żeby nie blokowały klikania w prezent */
+            pointer-events: none; /* Żeby nie blokowały klikania */
             z-index: 0;
         }
 
         .floating-heart {
             position: absolute;
             bottom: -50px;
-            opacity: 0.4;
+            /* Delikatnie zwiększona widoczność na różowym tle */
+            opacity: 0.6; 
             animation: floatUp linear infinite;
         }
 
         @keyframes floatUp {
             0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.4; }
-            90% { opacity: 0.4; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
             100% { transform: translateY(-110vh) scale(1.2) rotate(360deg); opacity: 0; }
         }
         /* ---------------------------------- */
@@ -237,7 +239,7 @@
             "Za to, że Marta to najlepsze co mnie spotkało.",
             "Za precyzję z jaką robisz bransoletki.",
             "Za to, że jesteś mądrzejsza od wszystkich których znam.",
-            "Za Twoją błyskotliwość w każdej rozmowie.",
+            "Za Twoją błyskotliwość v każdej rozmowie.",
             "Za to, że każda piosenka o miłości przypomina mi o Tobie.",
             "Za to, jak uroczo wyglądasz w czapce.",
             "Za Twoją szczerość prosto w oczy.",
@@ -311,16 +313,21 @@
         // Skrypt do generowania latających serduszek w tle
         function createBackgroundHearts() {
             const container = document.getElementById('bg-hearts-container');
-            const colors = ['#fab1a0', '#74b9ff', '#ffcccc', '#fd79a8'];
+            // ZMIANA 2: Tylko czerwone (#e74c3c) i niebieskie (#3498db)
+            const colors = ['#e74c3c', '#3498db']; 
             
-            for(let i = 0; i < 20; i++) {
+            // ZMIANA 4: Więcej serduszek (było 20, jest 60)
+            for(let i = 0; i < 60; i++) {
                 let heart = document.createElement('div');
                 heart.innerHTML = '❤';
                 heart.className = 'floating-heart';
                 
-                // Losowe pozycje, czasy trwania i kolory
+                // Losowe pozycje
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 8 + 5) + 's'; // Od 5s do 13s
+                
+                // ZMIANA 3: Szybsze latające serduszka (było 5-13s, jest 2-4s)
+                heart.style.animationDuration = (Math.random() * 2 + 2) + 's'; 
+                
                 heart.style.animationDelay = Math.random() * 5 + 's';
                 heart.style.fontSize = (Math.random() * 20 + 15) + 'px'; // Różne rozmiary
                 heart.style.color = colors[Math.floor(Math.random() * colors.length)];
