@@ -7,18 +7,52 @@
     <style>
         body {
             background-color: #d63031;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="10" y="30" font-size="20" fill="%23fab1a0" opacity="0.4">❤</text><text x="60" y="80" font-size="20" fill="%2374b9ff" opacity="0.4">❤</text></svg>');
             font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh; 
+            width: 100vw;
+            overflow: hidden; /* Blokujemy suwaki, wszystko ma być na jednym ekranie */
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* --- ANIMOWANE SERDUSZKA W TLE --- */
+        #bg-hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Żeby nie blokowały klikania w prezent */
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            opacity: 0.4;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-110vh) scale(1.2) rotate(360deg); opacity: 0; }
+        }
+        /* ---------------------------------- */
+
+        /* Główny kontener trzymający układ na środku */
+        #content-box {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; 
-            height: 100vh; /* Sztywna wysokość ekranu dla idealnego centrowania */
-            margin: 0;
-            padding: 20px;
-            overflow: hidden; /* Wszystko się zmieści na środku, więc chowamy suwaki */
-            text-align: center;
-            box-sizing: border-box;
+            justify-content: center;
         }
 
         h1 {
@@ -26,23 +60,15 @@
             font-size: 2.2rem;
             font-weight: 900;
             text-shadow: 2px 2px 0px #ffffff;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             line-height: 1.2;
-            max-width: 800px;
+            max-width: 90%;
+            text-align: center;
             transition: opacity 0.4s ease;
         }
 
         @media (min-width: 768px) {
-            h1 { font-size: 3.5rem; }
-        }
-
-        /* Kontener trzymający wszystko w jednym miejscu */
-        #content-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
+            h1 { font-size: 3.5rem; max-width: 800px; }
         }
 
         #gift-container {
@@ -90,13 +116,18 @@
         .ribbon-v { position: absolute; width: 30px; height: 100%; background: #f9ca24; left: 75px; }
         .ribbon-h { position: absolute; width: 100%; height: 30px; background: #f9ca24; top: 75px; }
 
-        /* Serce wyśrodkowane */
+        /* --- WYŚRODKOWANE SERCE --- */
         #heart-wrapper {
             display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* To gwarantuje idealny środek ekranu! */
             flex-direction: column;
             align-items: center;
             justify-content: center;
             animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
         }
 
         .paper-heart {
@@ -105,40 +136,51 @@
             height: 300px;
             clip-path: path('M160,80 C160,80 135,10 75,10 C15,10 0,55 0,100 C0,165 160,275 160,285 C160,275 320,165 320,100 C320,55 305,10 245,10 C185,10 160,80 160,80 Z');
             display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            padding: 30px;
+            align-items: center; /* Wyśrodkowanie w pionie */
+            justify-content: center; /* Wyśrodkowanie w poziomie */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         #reason-text {
             color: #630e3a;
             font-size: 1.15rem;
             font-weight: bold;
-            max-width: 230px;
-            margin-top: -30px;
+            text-align: center; /* Wyrównanie tekstu do środka */
+            max-width: 240px;
+            margin-top: -30px; /* Delikatna korekta wizualna dla kształtu serca */
             line-height: 1.4;
         }
 
         @keyframes popIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
 
         #reset-btn {
-            margin-top: 30px;
+            margin-top: 20px;
             padding: 15px 30px;
             background: #2d3436;
             color: white;
             border: none;
             border-radius: 50px;
             font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        #reset-btn:hover {
+            background: #000;
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
+
+    <div id="bg-hearts-container"></div>
 
     <div id="content-box">
         <h1 id="title">100 powodów przez które kocham w h*j moją dziewczynę Martę</h1>
@@ -266,9 +308,33 @@
             "Za to, że kocham Cię w h*j!"
         ];
 
+        // Skrypt do generowania latających serduszek w tle
+        function createBackgroundHearts() {
+            const container = document.getElementById('bg-hearts-container');
+            const colors = ['#fab1a0', '#74b9ff', '#ffcccc', '#fd79a8'];
+            
+            for(let i = 0; i < 20; i++) {
+                let heart = document.createElement('div');
+                heart.innerHTML = '❤';
+                heart.className = 'floating-heart';
+                
+                // Losowe pozycje, czasy trwania i kolory
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 8 + 5) + 's'; // Od 5s do 13s
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px'; // Różne rozmiary
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(heart);
+            }
+        }
+
+        // Uruchamiamy serduszka po załadowaniu strony
+        window.onload = createBackgroundHearts;
+
         function openGift() {
             document.getElementById('gift-container').style.display = 'none';
-            document.getElementById('title').style.display = 'none'; // Chowamy tytuł
+            document.getElementById('title').style.display = 'none';
             
             const wrapper = document.getElementById('heart-wrapper');
             const text = document.getElementById('reason-text');
@@ -280,7 +346,7 @@
 
         function resetGift() {
             document.getElementById('gift-container').style.display = 'block';
-            document.getElementById('title').style.display = 'block'; // Przywracamy tytuł
+            document.getElementById('title').style.display = 'block';
             document.getElementById('heart-wrapper').style.display = 'none';
         }
     </script>
